@@ -10,10 +10,11 @@ const defaultPath = join(process.cwd(), "src")
 const defaultOutdir = join(process.cwd(), "dist")
 
 async function getBuildOptions(path) {
-    const entryPoints = await globby([`${path}/**/*.(t|j)s*`])
-
+    //const entryPoints = await globby([`${path}/**/*.(t|j)s*`])
+    const entryPoints = await globby([`${path.replace(/\\/g, "/")}/**/*.(t|j)s*`]);
+    console.log(path)
     return {
-        entryPoints,
+        entryPoints: entryPoints,
         // minify: true,
         format: 'esm',
         bundle: true,
@@ -24,7 +25,9 @@ async function getBuildOptions(path) {
 
 async function build(path = defaultPath, outdir = defaultOutdir) {
     outdir = resolve(outdir)
-    await esbuild.build({ outdir, ...(await getBuildOptions(path)) })
+    const buildOptions = await getBuildOptions(path);
+    console.log('Build options:', buildOptions);
+    await esbuild.build({ outdir, ...buildOptions })
     console.log(`Build done at ${outdir}`)
 }
 
