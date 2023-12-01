@@ -18,7 +18,7 @@ async function getBuildOptions(path) {
         // minify: true,
         format: 'esm',
         bundle: true,
-        external: ["react", "react/jsx-runtime", "react-dom", "framer", "framer-motion"],
+        external: ["react", "react/jsx-runtime", "react-dom", "framer", "framer-motion", "@emotion/react", "@emotion/styled", "@emotion/*"],
         plugins: [esmPlugin, cssPlugin({ inject: true })],
     }
 }
